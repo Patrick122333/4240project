@@ -73,4 +73,3 @@ When presenting these examples I will be going through these steps
 - Example of an attacker maintaining access (create multiple accounts to blend in)
   - "sudo useradd -m -s /bin/bash newuser" and also "sudo passwd newuser"
   - Creating a cron job to allow access back to the machine during certain times to avoid being detected
-  - 
