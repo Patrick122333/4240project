@@ -3,7 +3,7 @@ from helpers import *
 
 # This is a menu for the exploits that I will be testing on the metasploitable 2 machine
 def dispMenu():
-    exploits = ["Samba", "UnrealIRCd", "VSFTP", "SSH Brute Force", "Distccd"]
+    exploits = ["Samba", "UnrealIRCd", "VSFTP", "SSH Brute Force", "Distccd", "Ingreslock"]
 
     for index, item in enumerate(exploits, start=1):
         print(f"({index}) {item}")
@@ -27,6 +27,8 @@ def optionHandler(selection, rHost, lHost):
         exploitBruteForce(rHost)
     elif choice == 5:
         exploitDistccd(rHost, lHost)
+    elif choice == 6:
+        exploitIngreslock(rHost)
     elif choice == 0:
         print("Exiting...")
         return False  

