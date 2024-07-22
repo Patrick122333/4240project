@@ -21,7 +21,7 @@ When presenting these examples I will be going through these steps
 ### SAMBA CVE-2007-2447 
 - Version: 3.0.20 < 3.0.25rc3
 - Desc: Samba is a software that is a re-implmentation of the SMB networking protocol. This software provides file and print services for all clients as long as they are using the SMB protocol.
-- Exploit: If Samba is configured to use the username map script, anyone can send arbitrary commands in disguise as a username to the server. The data sent to the targeted machine is not sanitized. The command will then be run without needing authorization.
+- Exploit: If Samba is configured to use the username map script and it is improperly configured, anyone can send arbitrary commands in disguise as a username to the server. The data sent to the targeted machine is not sanitized. The command will then be run without needing authorization.
 - Fix: To fix this, the user can update to a new version. If they are still on the older version, the user can navigate to /etc/samba/smb.conf on the vulnerable machine. The user can then either comment out or remove the line "username map script = /etc/samba/scripts/mapusers.sh". 
 
 ### UnrealIRCd CVE-2010-2075
