@@ -1,7 +1,7 @@
 # 4240project
 
 ## Description:
-This project will show a few examples of system penetration. I will be using two virtual machines (both running Ubuntu linux version 22.04) with one running the Metasploitable 2 test environment (https://sourceforge.net/projects/metasploitable/). I have included four python scripts to explore four of the vulnerabilities present on the test environment. Once each script is run (following the proper execution) the user will have full access to the remote system.
+This project will show a few examples of system penetration. I will be using two virtual machines (both running Ubuntu linux version 22.04) with one running the Metasploitable 2 test environment (https://sourceforge.net/projects/metasploitable/).
 
 When presenting these examples I will be going through these steps
 - network scanning 
@@ -10,28 +10,31 @@ When presenting these examples I will be going through these steps
 - post-exploitation
 
 ## Purpose:
-- The purpose of this project is to provide a deeper understanding for learning about system vulnerabilities and the exploitation techiniques used to exploit them. Instead of using the metasploit software to exploit the system vulnerabilites of metasploitable 2, I have created python scripts to do it instead. Doing this helps to gain a detailed explanation as to what is going on behind each exploit attempt. By viewing the documented python code, the user should have a further understanding of system security.
+- The purpose of this project is to provide a deeper understanding of system vulnerabilities and the exploitation techiniques used to exploit them. Instead of using the metasploit software to exploit the system vulnerabilites of metasploitable 2, I will be using different python3 functions. This allows the users to be able to view well documented code in an easy to read format. 
 
 ## System Requirements:
 - Metasploitable 2
-- Virtualbox 
+- Virtualbox
 
 ## Exploits/Vulnerabilities:
 
 ### SAMBA CVE-2007-2447 
 - Version: 3.0.20 < 3.0.25rc3
-- Desc: Samba is a software that is a re-implmentation of the SMB networking protocol. This software provides file and print services for all clients as long as they are using the SMB protocol .
+- Desc: Samba is a software that is a re-implmentation of the SMB networking protocol. This software provides file and print services for all clients as long as they are using the SMB protocol.
 - Exploit: If Samba is configured to use the non-default username map script, anyone can send arbitrary commands in disguise as a username to the server. The command will then be run without needing authorization.
+- Fix: 
 
 ### UnrealRCD CVE-2010-2075
 - Version: 3.2.8.1 
 - Desc: UnrealRCD is a daemon for Internet Realy Chat usage in order to provide chat services.
 - Exploit: UnrealRCD contains an exploit where it will execute any command send to the service if it begins with the string 'AB'. Ex: AB; [command to run]
+- Fix:
 
 ### VSFTP CVE-2011-2523
 - Version: 2.3.4
 - Desc: VSFTP is an FTP server for linux. 
 - Exploit: The exploit occurs when a user tries to login with a username that ends with ':)'. This opens a shell on port 6200, allowing the attacker unauthenticated access.
+- Fix:
 
 ### SSH (BRUTE FORCE EXAMPLE)
 - Version: Any.
@@ -44,16 +47,3 @@ When presenting these examples I will be going through these steps
   - On the remote machine (the breached machine) run the command " [IP of local machine] [portnum] < [file path to be retrieved]
 
 # Guide To Testing:
-- Samba:
-  - Python3 samba.py
-    - [RHOST] [RPORT] [LHOST] [LPORT]
-- SSH:
-  - Python3 sshBruteForce.py
-    - [RHOST]
-    - [RPORT]
-- UnrealRCD:
-  - Python3 unrealIRCD.py
-    - [RHOST] [RPORT] [LHOST] [LPORT]
-- VSFTP:
-  - Python3 ftpExploit.py
-    - [RHOST] [RPORT] [COMMAND]
