@@ -1,59 +1,55 @@
-import subprocess
-import xml.etree.ElementTree as ET
-import yaml
+from exploits import *
+from helpers import *
 
-# Get the exploits that are defined in the exploits.yml file and set them as exploits
-with open("exploits.yml", "r") as file:
-    exploits = yaml.safe_load(file)["exploits"]
+# This is a menu for the exploits that I will be testing on the metasploitable 2 machine
+def dispMenu():
+    exploits = ["Samba", "UnrealIRCd", "VSFTP", "SSH Brute Force", "Distccd"]
 
-# Prompt user for the target IP address
-target = input("Please Enter the target IP address: ")
+    for index, item in enumerate(exploits, start=1):
+        print(f"({index}) {item}")
+    print("(0) Exit")
 
-# This runs the nmap command with the provided target IP address from the previous step
-# -sV identifies the services running on the open ports while -oX allows for saves the scan results in an xml file
-nmap_command = ["nmap", "-sV", "-oX", "nmap_output.xml", target]
-subprocess.run(nmap_command)
+# This handles the menu option that is selected
+def optionHandler(selection, rHost, lHost):
+    try:
+        choice = int(selection)
+    except ValueError:
+        print("Error: Please enter a valid number.")
+        return True  
 
-# This will parse the xml file that nmap stored its results in
-tree = ET.parse("nmap_output.xml")
-root = tree.getroot()
+    if choice == 1:
+        exploitSamba(rHost, lHost)
+    elif choice == 2:
+        exploitUnrealIRCd(rHost,lHost)
+    elif choice == 3:
+        exploitVSFTP(rHost)
+    elif choice == 4:
+        exploitBruteForce(rHost)
+    elif choice == 5:
+        exploitDistccd(rHost, lHost)
+    elif choice == 0:
+        print("Exiting...")
+        return False  
+    else:
+        print("Error: Selection out of range. Please try again")
+    return True  
 
-# This function checks to see if there are any matches from the exploits.yml file and the xml file from nmap
-def version_matches(service_version, exploit_version):
-    return exploit_version in service_version if exploit_version else True
 
-# This list stores the matched Services that are found
-services = []
+if __name__ == "__main__":
+    
+    lHost = input(f"Enter your IP Address: ")
+    
+    rHost = input(f"Enter targets IP Address: ")
 
-# Searches through each "host" element that is stored in the nmap xml output file
-for host in root.findall("host"):
+    print(f"Select an exploit to run. Select '0' to quit.")
 
-    # Searches through each "port" element that is stored in the nmap xml output file
-    for port in host.findall("ports/port"):
+    while True:
+        
+        dispMenu()
+        
+        selection = input("Enter exploit option: ")
+        if not optionHandler(selection, rHost, lHost):
+            break
+        
 
-        # Obtains the port information
-        portID = port.get("portid")
-        protocol = port.get("protocol")
-        service = port.find("service")
-
-        # Searches to see if the "service" element exists in the nmap xml output file
-        if service is not None:
-
-            # Obtains the service information that is running on the port
-            serviceName = service.get("name", "")
-            serviceVersion = service.get("product", "") + " " + service.get("version", "")
-            
-            # After everything is Obtained, we compare it to the information in the yaml file
-            # If exploits are matched, we append it to the services list
-            for exploit in exploits:
-                if exploit["service"] == serviceName and version_matches(serviceVersion, exploit["version"]):
-                    services.append((portID, protocol, serviceName, serviceVersion))
-
-# Prints the information that what has been matched from the xml file and the yml file
-if services:
-    print("\nPorts, services, and versions that match exploits:")
-    for portID, protocol, service, version in services:
-        print(f"Port: {portID}/{protocol}, Service: {service}, Version: {version}")
-else:
-    print("No matching ports, services, and versions found.")
-
+        
