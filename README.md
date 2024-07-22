@@ -71,8 +71,6 @@ When presenting these examples I will be going through these steps
 - Example of how an attacker can easily obtain passwords etc
   - cat /etc/shadow (or by directly downloading the file to their local machine)
 - Example of an attacker maintaining access (create multiple accounts to blend in)
-  - sudo useradd -m -s /bin/bash newuser
-  - sudo passwd newuser
+  - "sudo useradd -m -s /bin/bash newuser" and also "sudo passwd newuser"
   - Creating a cron job to allow access back to the machine during certain times to avoid being detected
-
-# Guide To Testing:
+  - 
